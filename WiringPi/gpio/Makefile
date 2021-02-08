@@ -39,145 +39,76 @@ CFLAGS	= $(DEBUG) -Wall -Wextra $(INCLUDE) -Winline -pipe
 LDFLAGS	= -L$(DESTDIR)$(PREFIX)/lib
 LIBS    = -lwiringPi -lwiringPiDev -lpthread -lrt -lm -lcrypt
 
-ifeq ($(PLATFORM),)
-  #PLATFORM = OrangePi_2G-IOT
-  #PLATFORM = OrangePi_PC2
-  #PLATFORM = OrangePi_PRIME
-  #PLATFORM = OrangePi_ZEROPLUS
-  #PLATFORM = OrangePi_WIN
-  #PLATFORM = OrangePi_H5
-  #PLATFORM = OrangePi_ZERO
-  #PLATFORM = OrangePi_R1
-  #PLATFORM = OrangePi_H3
-  #PLATFORM = OrangePi_LITE2
-  PLATFORM = OrangePi_ONEPLUS
-  #PLATFORM = OrangePi_ZEROPLUS2_H3
-  #PLATFORM = OrangePi_ZEROPLUS2_H5
-  #PLATFORM = OrangePi_3
-  #PLATFORM = OrangePi_RK3399
+ifeq ($(BOARD),)
+  BOARD = orangepioneplus-h6
 endif
 
-ifeq ($(PLATFORM), OrangePi_2G-IOT)
+ifeq ($(BOARD), orangepi2giot)
 EXTRA_CFLAGS = -DCONFIG_ORANGEPI_2G_IOT
-EXTRA_CFLAGS += -DCONFIG_ORANGEPI
 endif
 
-ifneq ($(findstring $(PLATFORM), "OrangePi_ONE_H3" "OrangePi_LITE_H3" "OrangePi_PC" "OrangePi_PLUS" "OrangePi_PCPLUS" "OrangePi_PLUS2E"),)
+ifneq ($(findstring $(BOARD), "orangepione-h3" "orangepilite-h3" "orangepipc-h3" "orangepiplus-h3" "orangepipcplus-h3" "orangepiplus2e-h3"),)
 EXTRA_CFLAGS = -DCONFIG_ORANGEPI_H3
-EXTRA_CFLAGS += -DCONFIG_ORANGEPI
 endif
 
-ifeq ($(PLATFORM), OrangePi_PC2)
+ifeq ($(BOARD), orangepipc2-h5)
 EXTRA_CFLAGS = -DCONFIG_ORANGEPI_PC2
-EXTRA_CFLAGS += -DCONFIG_ORANGEPI
 endif
 
-ifeq ($(PLATFORM), OrangePi_PRIME)
+ifeq ($(BOARD), orangepiprime-h5)
 EXTRA_CFLAGS = -DCONFIG_ORANGEPI_PRIME
-EXTRA_CFLAGS += -DCONFIG_ORANGEPI
 endif
 
-ifeq ($(PLATFORM), OrangePi_ZEROPLUS)
+ifeq ($(BOARD), orangepizeroplus-h5)
 EXTRA_CFLAGS = -DCONFIG_ORANGEPI_ZEROPLUS
-EXTRA_CFLAGS += -DCONFIG_ORANGEPI
 endif
 
-ifneq ($(findstring $(PLATFORM), "OrangePi_WIN" "OrangePi_WINPLUS"),)
+ifneq ($(findstring $(BOARD), "orangepiwin-a64" "orangepiwinplus-a64"),)
 EXTRA_CFLAGS = -DCONFIG_ORANGEPI_WIN
-EXTRA_CFLAGS += -DCONFIG_ORANGEPI
 endif
 
-ifneq ($(findstring $(PLATFORM), "OrangePi_ZERO" "OrangePi_R1"),)
+ifneq ($(findstring $(BOARD), "orangepizero-h2" "orangepir1-h2"),)
 EXTRA_CFLAGS = -DCONFIG_ORANGEPI_ZERO
-EXTRA_CFLAGS += -DCONFIG_ORANGEPI
 endif
 
-ifneq ($(findstring $(PLATFORM), "OrangePi_ONEPLUS" "OrangePi_LITE2"),)
+ifneq ($(findstring $(BOARD), "orangepioneplus-h6" "orangepilite2-h6"),)
 EXTRA_CFLAGS = -DCONFIG_ORANGEPI_LITE2
-EXTRA_CFLAGS += -DCONFIG_ORANGEPI
 endif
 
-ifeq ($(PLATFORM), OrangePi_3)
+ifeq ($(BOARD), orangepi3-h6)
 EXTRA_CFLAGS = -DCONFIG_ORANGEPI_3
-EXTRA_CFLAGS += -DCONFIG_ORANGEPI
 endif
 
-ifeq ($(PLATFORM), OrangePi_ZEROPLUS2_H3)
+ifeq ($(BOARD), orangepizero2-h616)
+EXTRA_CFLAGS = -DCONFIG_ORANGEPI_ZERO2
+endif
+
+ifeq ($(BOARD), orangepizeroplus2h3)
 EXTRA_CFLAGS = -DCONFIG_ORANGEPI_ZEROPLUS2_H3
-EXTRA_CFLAGS += -DCONFIG_ORANGEPI
 endif
 
-ifeq ($(PLATFORM), OrangePi_ZEROPLUS2_H5)
+ifeq ($(BOARD), orangepizeroplus2h5)
 EXTRA_CFLAGS = -DCONFIG_ORANGEPI_ZEROPLUS2_H5
-EXTRA_CFLAGS += -DCONFIG_ORANGEPI
 endif
 
-ifeq ($(PLATFORM), OrangePi_RK3399)
+ifeq ($(BOARD), orangepirk3399)
 EXTRA_CFLAGS = -DCONFIG_ORANGEPI_RK3399
-EXTRA_CFLAGS += -DCONFIG_ORANGEPI
 endif
 
-ifeq ($(PLATFORM), OrangePi_4)
+ifeq ($(BOARD), orangepi4)
 EXTRA_CFLAGS = -DCONFIG_ORANGEPI_4
-EXTRA_CFLAGS += -DCONFIG_ORANGEPI
 endif
+
+ifeq ($(BOARD), orangepir1plus-rk3328)
+EXTRA_CFLAGS = -DCONFIG_ORANGEPI_R1PLUS
+endif
+
+EXTRA_CFLAGS += -DCONFIG_ORANGEPI
 
 # May not need to  alter anything below this line
 ###############################################################################
 
-SRC	=	gpio.c readall.c
-
-ifeq ($(PLATFORM), OrangePi_2G-IOT)
-  SRC += OrangePi.c
-endif
-
-ifeq ($(PLATFORM), OrangePi_PC2)
-  SRC += OrangePi.c
-endif
-
-ifeq ($(PLATFORM), OrangePi_PRIME)
-  SRC += OrangePi.c
-endif
-
-ifeq ($(PLATFORM), OrangePi_ZEROPLUS)
-  SRC += OrangePi.c
-endif
-
-ifneq ($(findstring $(PLATFORM), "OrangePi_WIN" "OrangePi_WINPLUS"),)
-  SRC += OrangePi.c
-endif
-
-ifneq ($(findstring $(PLATFORM), "OrangePi_ONE_H3" "OrangePi_LITE_H3" "OrangePi_PC" "OrangePi_PLUS" "OrangePi_PCPLUS" "OrangePi_PLUS2E"),)
-  SRC += OrangePi.c
-endif
-
-ifneq ($(findstring $(PLATFORM), "OrangePi_ZERO" "OrangePi_R1"),)
-  SRC += OrangePi.c
-endif
-
-ifneq ($(findstring $(PLATFORM), "OrangePi_ONEPLUS" "OrangePi_LITE2"),)
-  SRC += OrangePi.c
-endif
-
-ifeq ($(PLATFORM), OrangePi_3)
-  SRC += OrangePi.c
-endif
-
-ifeq ($(PLATFORM), OrangePi_ZEROPLUS2_H3)
-  SRC += OrangePi.c
-endif
-
-ifeq ($(PLATFORM), OrangePi_ZEROPLUS2_H5)
-  SRC += OrangePi.c
-endif
-
-ifeq ($(PLATFORM), OrangePi_RK3399)
-  SRC += OrangePi.c
-endif
-
-ifeq ($(PLATFORM), OrangePi_4)
-  SRC += OrangePi.c
-endif
+SRC	=	gpio.c readall.c OrangePi.c
 
 OBJ	=	$(SRC:.c=.o)
 

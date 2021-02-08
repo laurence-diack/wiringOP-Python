@@ -49,7 +49,8 @@ SRC	=	blink.c blink8.c blink12.c					\
 		lowPower.c							\
 		max31855.c							\
 		rht03.c								\
-		w25q64_test.c oled_demo.c spiSpeed.c
+		w25q64_test.c oled_demo.c spiSpeed.c				\
+		watchdog.c spidev_test.c spidev_test_linux3_4.c
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -157,6 +158,18 @@ max31855:	max31855.o
 w25q64_test:	w25q64_test.o
 	$Q echo [link]
 	$Q $(CC) -o $@ w25q64_test.o $(LDFLAGS) $(LDLIBS)
+
+watchdog:	watchdog.o
+	$Q echo [link]
+	$Q $(CC) -o $@ watchdog.o $(LDFLAGS) $(LDLIBS)
+
+spidev_test:	spidev_test.o
+	$Q echo [link]
+	$Q $(CC) -o $@ spidev_test.o $(LDFLAGS) $(LDLIBS)
+
+spidev_test_linux3_4:	spidev_test_linux3_4.o
+	$Q echo [link]
+	$Q $(CC) -o $@ spidev_test_linux3_4.o $(LDFLAGS) $(LDLIBS)
 
 oled_demo:	oled_demo.o
 	$Q echo [link]
